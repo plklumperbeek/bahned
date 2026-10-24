@@ -5,6 +5,11 @@ google cloud build
 cloudbuild-bahned
 plklumperbeek-bahned
 
+IAM & Admin -> IAM -> genuine-hold-127212
+permission table
+last analysed 10-24-26
+SLO service level objective max 500
+select SLI goal 90% -> SLO api
 
 
 # bahnl
