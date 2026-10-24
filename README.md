@@ -1,4 +1,5 @@
 # bahned
+To search for yourself online and check your digital footprint, use an incognito or private browser window so your personal search history does not alter the results
 
 Installed github apps
 google cloud build 
