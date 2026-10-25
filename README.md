@@ -1,6 +1,40 @@
 # bahned
 To search for yourself online and check your digital footprint, use an incognito or private browser window so your personal search history does not alter the results
 
+   gcloud run services update service-bahned \
+       --region=europe-west1 \
+       --ingress=internal-and-cloud-load-balancing
+updated
+
+
+
+php -S localhost:8080 index.php
+Open http://localhost:8080 in your browser.
+
+gcloud run services proxy SERVICE --project service-bahned //PROJECT-ID
+
+
+You can also test private services without the proxy by using a tool like curl, passing an auth token in the Authorization header:
+
+curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" SERVICE_URL
+
+
+# Option A: Reset the trigger to use the default Cloud Build service account
+gcloud builds triggers update rmgpgab-service-bahned-europe-west1-plklumperbeek-bahned--mafhd \
+    --region=global \
+    --service-account=""
+A genomen foutmelding
+
+
+# Option B: Run a manual build to verify your application code builds and deploys:
+gcloud builds submit --config=cloudbuild.yaml
+
+
+gcloud run services update service-bahned \
+    --region=europe-west1 \
+    --min-instances=0
+Ik had hem 1 gegeven maar dan blijft hij het gebruiken dus cost omhoog
+
 Installed github apps
 google cloud build 
 cloudbuild-bahned
