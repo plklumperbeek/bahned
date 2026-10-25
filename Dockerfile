@@ -17,7 +17,7 @@ WORKDIR /app
 COPY . .
 
 # Installeer PHP dependencies (zonder dev tools voor productie)
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --dev --optimize-autoloader
 
 # Exposeer de poort die Cloud Run verwacht
 EXPOSE 8080
