@@ -1,6 +1,21 @@
 # bahned
 To search for yourself online and check your digital footprint, use an incognito or private browser window so your personal search history does not alter the results
 
+
+# 1. Build your local image
+docker build -t pieterklumperbeek .
+
+# 2. Tag the image for Artifact Registry
+docker tag pieterklumperbeek europe-west4-docker.pkg.dev/genuine-hold-127212/cloud-run-source-deploy/pieterklumperbeek:latest
+
+# 3. Configure Docker authentication for Artifact Registry (if not already done)
+gcloud auth configure-docker europe-west4-docker.pkg.dev
+
+# 4. Push the image
+docker push europe-west4-docker.pkg.dev/genuine-hold-127212/cloud-run-source-deploy/pieterklumperbeek:latest
+
+
+
    gcloud run services update service-bahned \
        --region=europe-west1 \
        --ingress=internal-and-cloud-load-balancing
