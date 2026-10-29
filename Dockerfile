@@ -16,7 +16,7 @@ WORKDIR /app
 # Kopieer projectbestanden
 COPY . .
 
-# Installeer PHP dependencies (zonder dev tools voor productie)
+# Installeer PHP dependencies (zonder dev tools voor productie = --no-dev)
 RUN composer install --dev --optimize-autoloader
 
 # Exposeer de poort die Cloud Run verwacht
