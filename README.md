@@ -4,6 +4,12 @@ To search for yourself online and check your digital footprint, use an incognito
 
 gcloud config set project service-bahned //[PROJECT_ID]` to change to a different project.
 
+gcloud run deploy service-bahned \
+    --source . \
+    --region= europe-west1 \
+    --allow-unauthenticated
+
+
 
 # 1. Build your local image
 docker build -t pieterklumperbeek .
