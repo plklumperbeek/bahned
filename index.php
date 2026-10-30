@@ -9,6 +9,8 @@ $port = getenv('PORT') ?: '8080';
 
 // Eenvoudige routing: verwerk alleen POST-verzoeken op /translate
 $uri = $_SERVER['REQUEST_URI'];
+ echo "uri ".$uri;
+/*
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $uri === '/translate') {
     
     // Verkrijg JSON-input
@@ -59,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $uri === '/translate') {
     }
     exit;
 }
-
+*/
 // Standaard status check voor Cloud Run
 if ($uri === '/') {
     echo "PHP Translation Service is running.";
