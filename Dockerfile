@@ -1,26 +1,38 @@
-# Gebruik de officiële PHP-CLI image
-FROM php:8.2-cli
+# Use the official PHP image.
+# https://hub.docker.com/_/php
+FROM php:8.4-apache
 
-# Installeer systeemvereisten en zip-extensie (nodig voor Composer)
-RUN apt-get update && apt-get install -y \
-    unzip \
-    libzip-dev \
-    && docker-php-ext-install zip
+# Configure PHP for Cloud Run.
+# Precompile PHP code with opcache.
+RUN docker-php-ext-install -j "$(nproc)" opcache
+RUN set -ex; \
+  { \
+    echo "; Cloud Run enforces memory & timeouts"; \
+    echo "memory_limit = -1"; \
+    echo "max_execution_time = 0"; \
+    echo "; File upload at Cloud Run network limit"; \
+    echo "upload_max_filesize = 32M"; \
+    echo "post_max_size = 32M"; \
+    echo "; Configure Opcache for Containers"; \
+    echo "opcache.enable = On"; \
+    echo "opcache.validate_timestamps = Off"; \
+    echo "; Configure Opcache Memory (Application-specific)"; \
+    echo "opcache.memory_consumption = 32"; \
+  } > "$PHP_INI_DIR/conf.d/cloud-run.ini"
 
-# Installeer Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy in custom code from the host machine.
+WORKDIR /var/www/html
+COPY . ./
 
-# Stel de werkomgeving in
-WORKDIR /app
+# Ensure the webserver has permissions to execute index.php
+RUN chown -R www-data:www-data /var/www/html
 
-# Kopieer projectbestanden
-COPY . .
+# Use the PORT environment variable in Apache configuration files.
+# https://cloud.google.com/run/docs/reference/container-contract#port
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
-# Installeer PHP dependencies (zonder dev tools voor productie = --no-dev)
-RUN composer install --dev --optimize-autoloader
-
-# Exposeer de poort die Cloud Run verwacht
-EXPOSE 8080
-
-# Start de ingebouwde PHP webserver op de juiste poort
-CMD ["php", "-S", "0.0.0.0:8080", "index.php"]
+# Configure PHP for development.
+# Switch to the production php.ini for production operations.
+# RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+# https://github.com/docker-library/docs/blob/master/php/README.md#configuration
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
