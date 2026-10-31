@@ -2,6 +2,9 @@
 To search for yourself online and check your digital footprint, use an incognito or private browser window so your personal search history does not alter the results
 --dev  ipv --no-dev
 
+https://docs.cloud.google.com/sdk/auth_success //dit is een echo maar later dan hierboven
+
+
 gcloud config set project service-bahned //[PROJECT_ID]` to change to a different project.
 
 gcloud run deploy service-bahned \
