@@ -1,6 +1,8 @@
 # bahned
 To search for yourself online and check your digital footprint, use an incognito or private browser window so your personal search history does not alter the results
 --dev  ipv --no-dev
+dit werkt niet: 
+https://servicename-bahnl-291383635068.europe-west4.run.app/ 
 
 https://docs.cloud.google.com/sdk/auth_success //dit is een echo maar later dan hierboven
 
